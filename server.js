@@ -17,6 +17,10 @@ app.use(express.json())
 
 const subscribersRouter = require('./routes/subscribers')
 app.use('/subscribers', subscribersRouter)
+const postRoutes = require('./routes/posts')
+app.use('/posts', postRoutes)
+const userRouter = require('./routes/user')
+app.use('/user', userRouter)
 
 // Serve static assets
 app.use(express.static('public'))
