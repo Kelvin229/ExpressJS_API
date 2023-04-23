@@ -14,7 +14,7 @@ const getAllSubscribers = async (req, res) => {
   
   // Getting One
   const getOneSubscriber =  (req, res) => {
-    res.json(res.subscriber)
+    res.json(req.subscriber)
   }
   
   // Creating one
@@ -34,13 +34,13 @@ const getAllSubscribers = async (req, res) => {
   // Updating One
  const updateSubscriber = async (req, res) => {
     if (req.body.name != null) {
-      res.subscriber.name = req.body.name
+        req.subscriber.name = req.body.name
     }
     if (req.body.subscribedToChannel != null) {
-      res.subscriber.subscribedToChannel = req.body.subscribedToChannel
+        req.subscriber.subscribedToChannel = req.body.subscribedToChannel
     }
     try {
-      const updatedSubscriber = await res.subscriber.save()
+      const updatedSubscriber = await req.subscriber.save()
       res.json(updatedSubscriber)
     } catch (err) {
       res.status(400).json({ message: err.message })
@@ -50,7 +50,7 @@ const getAllSubscribers = async (req, res) => {
   // Deleting One
  const deleteSubcriber = async (req, res) => {
     try {
-      await res.subscriber.remove()
+      await req.subscriber.remove()
       res.json({ message: 'Deleted Subscriber' })
     } catch (err) {
       res.status(500).json({ message: err.message })

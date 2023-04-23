@@ -32,7 +32,7 @@ async function getSubscriber(req, res, next) {
     if (subscriber == null) {
       return res.status(404).json({ message: 'Cannot find subscriber' });
     }
-    res.subscriber = subscriber;
+    req.subscriber = subscriber;
     next();
   } catch (err) {
     return res.status(500).json({ message: err.message });
