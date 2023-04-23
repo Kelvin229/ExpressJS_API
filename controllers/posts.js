@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 
 const PostMessage = require('../models/postMessage.js')
 
-const router = express.Router();
 
 const getPosts = async (req, res) => {
     const { page } = req.query;
