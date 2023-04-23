@@ -11,7 +11,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000',
+                url: 'https://helpful-deer-belt.cyclic.app/',
                 description: 'Development server'
             }
         ]
