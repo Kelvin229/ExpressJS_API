@@ -6,7 +6,7 @@ const {
   getOneSubscriber,
   createSubscriber,
   updateSubscriber,
-  deleteSubcriber
+  deleteSubscriber
 } = require('../controllers/subscribers.js');
 
 const router = express.Router()
@@ -24,7 +24,7 @@ router.post('/', createSubscriber);
 router.patch('/:id', getSubscriber, updateSubscriber);
 
 // Deleting One
-router.delete('/:id', getSubscriber, deleteSubcriber);
+router.delete('/:id', getSubscriber, deleteSubscriber);
 
 async function getSubscriber(req, res, next) {
   try {

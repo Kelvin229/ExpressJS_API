@@ -32,30 +32,34 @@ const getAllSubscribers = async (req, res) => {
   }
   
   // Updating One
- const updateSubscriber = async (req, res) => {
-    if (req.body.name != null) {
-        req.subscriber.name = req.body.name
-    }
-    if (req.body.subscribedToChannel != null) {
-        req.subscriber.subscribedToChannel = req.body.subscribedToChannel
-    }
+  const updateSubscriber = async (req, res) => {
     try {
+      if (req.body.name != null) {
+        req.subscriber.name = req.body.name
+      }
+      if (req.body.subscribedToChannel != null) {
+        req.subscriber.subscribedToChannel = req.body.subscribedToChannel
+      }
       const updatedSubscriber = await req.subscriber.save()
       res.json(updatedSubscriber)
     } catch (err) {
       res.status(400).json({ message: err.message })
     }
-  }
+  }  
   
   // Deleting One
- const deleteSubcriber = async (req, res) => {
+  const deleteSubscriber = async (req, res) => {
     try {
-      await req.subscriber.remove()
-      res.json({ message: 'Deleted Subscriber' })
+      if (req.subscriber) {
+        await req.subscriber.remove();
+        res.json({ message: 'Subscriber deleted' });
+      } else {
+        res.status(404).json({ message: 'Subscriber not found' });
+      }
     } catch (err) {
-      res.status(500).json({ message: err.message })
+      res.status(500).json({ message: err.message });
     }
-  }
+  };  
 
   
   const subscriberController = {
@@ -63,7 +67,7 @@ const getAllSubscribers = async (req, res) => {
     getOneSubscriber,
     createSubscriber,
     updateSubscriber,
-    deleteSubcriber,
+    deleteSubscriber,
   };
 
   module.exports = subscriberController;
