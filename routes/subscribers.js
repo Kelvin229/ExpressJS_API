@@ -24,7 +24,7 @@ router.post('/', createSubscriber);
 router.patch('/:id', getSubscriber, updateSubscriber);
 
 // Deleting One
-router.delete('/:id', getSubscriber, deleteSubscriber);
+router.delete("/:id", deleteSubscriber);
 
 async function getSubscriber(req, res, next) {
   try {

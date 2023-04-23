@@ -49,18 +49,17 @@ const getAllSubscribers = async (req, res) => {
   
   // Deleting One
   const deleteSubscriber = async (req, res) => {
+    const { id } = req.params;
     try {
-      if (req.subscriber) {
-        await req.subscriber.remove();
-        res.json({ message: 'Subscriber deleted' });
-      } else {
-        res.status(404).json({ message: 'Subscriber not found' });
+      const deletedSubscriber = await Subscriber.findByIdAndRemove(id);
+      if (!deletedSubscriber) {
+        return res.status(404).json({ message: "Subscriber not found" });
       }
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+      res.status(200).json({ message: "Subscriber deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-  };  
-
+  } 
   
   const subscriberController = {
     getAllSubscribers,
