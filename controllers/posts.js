@@ -65,7 +65,8 @@ const getPost = async (req, res) => {
 }
 
 const createPost = async (req, res) => {
-    const post = req.body;
+    // const post = req.body;
+    const { title, message, tags, selectedFile } = req.body;
 
     // const newPostMessage = new PostMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() })
     const newPostMessage = new PostMessage({ title, message, tags, selectedFile, creator: req.userId, createdAt: new Date().toISOString() })
