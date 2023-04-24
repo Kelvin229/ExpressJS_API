@@ -81,9 +81,55 @@ const secretKey = process.env.JWT_SECRET;
     }
   };
 
+  const googlelogin = async (req, res) => {
+    const { result, token } = req.body;
+  
+    try {
+      // Sanitize input
+      const sanitizedEmail = sanitizeHtml(result.email);
+      const sanitizedName = sanitizeHtml(result.name);
+  
+      // Validate input
+      if (!sanitizedEmail || !sanitizedName) {
+        return res.status(400).json({ message: 'Missing required fields' });
+      }
+  
+      // Check if the user already exists in the database
+      let user = await UserModal.findOne({ email: sanitizedEmail });
+  
+      if (!user) {
+        // Generate a random password and hash it
+        const password = Math.random().toString(36).substring(7);
+        const hashedPassword = await bcrypt.hash(password, 12);
+  
+        // Create a new user object if the user doesn't exist
+        user = new UserModal({
+          name: sanitizedName,
+          email: sanitizedEmail,
+          password: hashedPassword,
+        });
+  
+        // Save the new user to the database
+        await user.save();
+      }
+  
+      // Generate JWT token
+      const token = jwt.sign({ email: user.email, id: user._id }, secretKey, {
+        expiresIn: '1h',
+      });
+  
+      // Send the token back to the client
+      res.json({ token });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Server error');
+    }
+  };
+
 const userController = {
     signin,
     signup,
+    googlelogin,
   };
   
   // Export the object
